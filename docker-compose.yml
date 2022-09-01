@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+  nginx-reverse-proxy:
+    image: nginx:alpine
+    container_name: nginx-reverse-proxy
+    restart: always
+    volumes:
+      - ./nginx-reverse-proxy/data:/usr/share/nginx/html:ro
+      - ./nginx-reverse-proxy/config/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 80:80
+    sysctls:
+      net.ipv6.conf.all.disable_ipv6: 0
+      net.ipv6.conf.default.disable_ipv6: 0
+  nginx-server:
+    image: nginx:alpine
+    container_name: nginx-server
+    restart: always
+    volumes:
+      - ./nginx-server/data:/usr/share/nginx/html:ro
+      - /media/dave/VM:/var/www/VM:ro
+      - /media/dave/Multimedia:/var/www/Multimedia:ro
+      - /media/dave/Workspace:/var/www/Workspace:ro
+      - ./nginx-server/config/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 11080:11080
+      - 11081:11081
+      - 11082:11082
+      - 11083:11083
+    sysctls:
+      net.ipv6.conf.all.disable_ipv6: 0
+      net.ipv6.conf.default.disable_ipv6: 0
+  apache-server:
+    image: php:7.3-apache
+    container_name: apache-server
+    restart: always
+    volumes:
+      - ./apache-server/data:/var/www/html:ro
+      - /media/dave/VM:/var/www/VM:ro
+      - /media/dave/Multimedia:/var/www/Multimedia:ro
+      - /media/dave/Workspace:/var/www/Workspace:ro
+      - ./apache-server/config/000-default.conf:/etc/apache2/sites-available/000-default.conf:ro
+    ports:
+      - 9080:9080
+      - 9081:9081
+      - 9082:9082
+      - 9083:9083
+    sysctls:
+      net.ipv6.conf.all.disable_ipv6: 0
+      net.ipv6.conf.default.disable_ipv6: 0

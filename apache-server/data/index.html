@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+      function populateHeader() {
+        var domain = window.location.hostname;
+        var port = window.location.port;
+        port = (port == "" || port == null)? 80 : port;
+        var linkformat = `http://{domain}:{port}/{path}`;
+        
+        fetch("http://" + domain + ":" + port + "/links.json")
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            var menu = document.createElement("ul");
+            console.log(data);
+            data.vhosts.forEach(element => {
+              var link = document.createElement("a");
+              link.innerHTML = element.name;
+              link.href = linkformat.replace("{domain}", domain)
+                                    .replace("{port}", element.port)
+                                    .replace("{path}", element.path);
+              link.setAttribute("target", "_blank");
+              link.setAttribute("rel", "noopener noreferrer");
+
+              var item = document.createElement("li");
+              item.appendChild(link);
+
+              menu.appendChild(item);
+            });
+
+            var header = document.getElementById("header");
+            header.appendChild(menu);
+          });
+      }
+    </script>
+  </head>
+  <body onload="populateHeader()">
+    <header>
+      <div id="header"></div>
+    </header>
+    <hr/>
+    <main>Hello Apache</main>
+    <footer></footer>
+  </body>
+</html>

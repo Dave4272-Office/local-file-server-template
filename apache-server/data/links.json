@@ -1,0 +1,24 @@
+{
+    "vhosts": [
+        {
+            "name": "VM",
+            "port": "9081",
+            "path": ""
+        },
+        {
+            "name": "Multimedia",
+            "port": "9082",
+            "path": ""
+        },
+        {
+            "name": "Workspace",
+            "port": "9083",
+            "path": ""
+        },
+        {
+            "name": "Redmi 6 Resources",
+            "port": "9083",
+            "path": "Redmi 6/"
+        }
+    ]
+}
